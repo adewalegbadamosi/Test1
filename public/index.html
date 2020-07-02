@@ -73,28 +73,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         
         <script src="bootstrap.min.js"></script>
-        <!-- <script>
-        $(document).ready( () => {            
-            let backgroundImgArray = [1,2,3,4,5,6,7];
-            //let backgroundImgArray = ['1b','2b'];
-            setInterval(() => {
-                $("body").css({
-                    "background" : "url(weather_images/" + backgroundImgArray[Math.floor(Math.random() * 7)]+ ".jpg)",
-                    "background-size" : "400vh"
-                })
-            }, 15000)
-        })
-        </script> -->
+        
+      
+    
         <script>
             
             window.onload = () => {            
             let currentPosition = document.getElementById("currentPosition");
-
-            // let backgroundImgArray = [1,2,3,4,5,6];
-            // $("body").css({
-            //         "background" : "url(weather_img/" + backgroundImgArray[Math.floor(Math.random() * 6)]+ ".jpg)",
-            //         "background-size" : "350vh"
-            //     })
 
               if (navigator.geolocation) {
                navigator.geolocation.getCurrentPosition(showPosition) ;   
@@ -106,7 +91,7 @@
             let currentLat = position.coords.latitude ;
              let currentLong = position.coords.longitude ;
              //console.log(position.coords);
-             let key = "5fced34dcd491f4655e9b9f841eab310";
+             let key = secret_map_key;
              $.ajax({
                         url: "https://api.openweathermap.org/data/2.5/weather",
                         dataType: "json",
@@ -145,8 +130,8 @@
                 $('#submit').click( () => {
                     let city = $('#city').val();
                     //console.log(city);
-                    let openweathermapKey = "5fced34dcd491f4655e9b9f841eab310";
-                    let timezonedbKey = "EDU958PBDG8O";
+                    let openweathermapKey = secret_map_key
+                    let timezonedbKey = secret_timezone_key;
                    
                     $.ajax({
                         url: "https://api.openweathermap.org/data/2.5/weather",
