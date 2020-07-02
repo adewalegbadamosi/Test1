@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <title>Weather App</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="jquery-3.3.1.js"></script>
+        <script  src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"> </script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="bootstrap.min.css"> 
+        <link rel="stylesheet" href="custom.css">  
+    </head>
+    <body class="">
+        <header class="container-fluid">            
+                <nav class="fixed-top px-md-5 shadow mb-5">                                             
+                            <ul class="row display ml-0 mr-md-0">
+                                <li class="nav-item p-2 mt-2 align-self font-weight-bold text-white font-size"> <i>...Know weather conditions of places in the world</i></li>                                     
+                            </ul>              
+                </nav>           
+        </header> <br> <br> <br>
+        <main>
+            <div class="container-fluid">
+                <div class="row m-2 p-3 m-md-5 p-md-5 justify-content-center shadow">
+                    <div class="col-md-10">                                        
+                        <h1 class="display-4 font-weight-bold arial text-center text-white"> Weather App </h1>
+                                            
+                    </div>
+                </div> 
+                
+                
+            </div>
+            
+            
+            <div class="container-fluid">
+                <div class="my-4 p-2 m-md-5 p-md-5">                                      
+                    <div class="row justify-content-md-center">          
+                        <div class="col-md-6 mx-2 my-3">                       
+                                                                                
+                            <div id="currentPosition" class="shadow rounded">
+                                                            
+                            </div>                     
+                                                        
+                        </div>                          
+                    </div> 
+                </div>
+                
+            </div>
+            <div class="container-fluid">
+                <div class="my-4 p-2 m-md-5 p-md-5">                                      
+                    <div class="row justify-content-md-center">          
+                        <div class="col-md-6 mx-2 my-3"> 
+                            <div class="rounded text-center pt-3 shadow">                                        
+                                    <input type="text" class="rounded w-50 text-white border p-2 mb-2 font-size font-weight-bold" placeholder="Search location..." id='city'>
+                                    <input type="button" id='submit' class="rounded text-white border py-2 px-4 font-size font-weight-bold" value="Get weather forecast"> <hr>
+                            </div>
+                                                      
+                            <div id="result" class="shadow rounded">
+                                                            
+                            </div>                     
+                                                        
+                        </div>                          
+                    </div> 
+                </div>
+                
+            </div>
+ 
+        </main> <BR></BR>
+       
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <script src="bootstrap.min.js"></script>
+        <!-- <script>
+        $(document).ready( () => {            
+            let backgroundImgArray = [1,2,3,4,5,6,7];
+            //let backgroundImgArray = ['1b','2b'];
+            setInterval(() => {
+                $("body").css({
+                    "background" : "url(weather_images/" + backgroundImgArray[Math.floor(Math.random() * 7)]+ ".jpg)",
+                    "background-size" : "400vh"
+                })
+            }, 15000)
+        })
+        </script> -->
+        <script>
+            
+            window.onload = () => {            
+            let currentPosition = document.getElementById("currentPosition");
+
+            // let backgroundImgArray = [1,2,3,4,5,6];
+            // $("body").css({
+            //         "background" : "url(weather_img/" + backgroundImgArray[Math.floor(Math.random() * 6)]+ ".jpg)",
+            //         "background-size" : "350vh"
+            //     })
+
+              if (navigator.geolocation) {
+               navigator.geolocation.getCurrentPosition(showPosition) ;   
+              } else {
+                currentPosition.innerHTML = "<p> Loading current position... </p>" ;
+              }
+
+            function showPosition(position) { 
+            let currentLat = position.coords.latitude ;
+             let currentLong = position.coords.longitude ;
+             //console.log(position.coords);
+             let key = "5fced34dcd491f4655e9b9f841eab310";
+             $.ajax({
+                        url: "https://api.openweathermap.org/data/2.5/weather",
+                        dataType: "json",
+                        type: "GET",
+                        data: {lat:currentLat, lon:currentLong, appid: key, units: "metric"},                     
+                        success: (data) => {
+                            let weather = data.weather[0];
+                            let display = 
+                            '<div class="text-center py-5 px-3 rounded"><h1 class="text-white text-center font-weight-bold"> Current Location</h1> <br>        <div class="d-flex flex-row justify-content-around"><div class="align-self"><h2 class="text-white font-weight-bold">' + data.name + '</h2> <br>'+ 
+                            '<div class="p-3 text-white font-size font-weight-bold">'+ dateTime + '</div></div>' +                               
+                            '<div><div class=""><div><img src=http://api.openweathermap.org/img/w/'+ weather.icon + '.png></div><br>'+
+                            '<div class="p-2 my-1 rounded"><p class="text-white font-weight-bold font-size">'+  weather.main +', '+ data.main.temp + '&deg;C </p></div></div></div></div>' ;                                  
+                                
+                            $("#currentPosition").html(display); 
+                        }
+             });
+              
+             let today = new Date();
+                    let options = {                                 
+                        hour12: false,
+                        weekday: 'short',                               
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    }
+            let dateTime = today.toLocaleString('en-US', options); 
+                      
+            } 
+            }   
+        </script>
+       
+       
+        <script>
+            $(document).ready(() => {
+                $('#submit').click( () => {
+                    let city = $('#city').val();
+                    //console.log(city);
+                    let openweathermapKey = "5fced34dcd491f4655e9b9f841eab310";
+                    let timezonedbKey = "EDU958PBDG8O";
+                   
+                    $.ajax({
+                        url: "https://api.openweathermap.org/data/2.5/weather",
+                        dataType: "json",
+                        type: "GET",
+                        data: {q: city, appid: openweathermapKey, units: "metric"},
+                        success: (data) => {
+                            let weather = data.weather[0];  
+                            let lat = data.coord.lat; 
+                            let lon = data.coord.lon;                             
+                            $.ajax({                                
+                                url: "https://api.timezonedb.com/v2.1/get-time-zone",
+                                dataType: "json" ,
+                                type: "GET",
+                                data:{ key: timezonedbKey, format: 'json', by: 'position', lat: lat, lng:lon },
+                                success: (data2) => {
+                                    //console.log(data2);
+                                    let rawTime = data2.timestamp;
+                                    let timeAtZone = new Date((rawTime * 1000) - (60*60*1000));
+                                    let options = {                                 
+                                        hour12: true,
+                                        weekday: 'short',                               
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric'
+                                    }
+                                    let dateTimeAtZone = timeAtZone.toLocaleTimeString('en-US', options); 
+                                   
+                                let weatherResult = 
+                                '<div class="text-center py-5 px-3 rounded"><h2 class="text-white text-center font-weight-bold">' + data.name + '</h2> <br>'+ 
+                                '<div class="p-3 text-white font-size font-weight-bold">'+ dateTimeAtZone + '</div>' +
+                                '<div class="font-size"><div><img src=http://api.openweathermap.org/img/w/'+ weather.icon + '.png></div><br>'+
+                                 '<div class="p-3 my-2 rounded border"><p class="text-white font-weight-bold">'+ data.main.temp + '&deg;C </p></div>'+
+                                  '<div class="p-3 my-2 rounded border"><p class="text-white font-weight-bold">' + weather.main + '</p></div>' + 
+                                  '<div class="p-3 my-2 rounded border"><p class="text-white font-weight-bold">' + weather.description + '</p></div>' +
+                                  '<div class="p-3 my-2 rounded border"><p class="text-white font-weight-bold">' + data.main.pressure + ' Hpa </p></div>' +
+                                  '<div class="p-3 my-2 rounded border"><p class="text-white font-weight-bold">' + data.main.humidity + ' %</p></div></div></div>' ;
+
+                                  let loading = 
+                                   '<div class="card bg-danger text-center py-5 px-3 rounded"><h2 class="text-white text-center font-weight-bold">Request processing...</h2> <br>' ;
+                                  
+                                    if(!rawTime){                                    
+                                        $("#result").html(loading);
+                                    }else{
+                                        $("#result").html(weatherResult);
+                                    }
+
+                                
+                                    },
+                                failure: () => {
+                                   // console.log('Error, request not successful');
+                                   
+                                } 
+                            })
+                        }
+                        
+                    })
+                })
+            })
+        </script>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="/__/firebase/6.3.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#reserved-urls -->
+
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+    </body>
+</html>

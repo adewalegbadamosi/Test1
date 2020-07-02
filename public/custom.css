@@ -1,0 +1,69 @@
+body{
+    /* min-height: 100% !important; */
+    /* background-color: rgb(248, 81, 81); */
+    /* background:url('weather_img/2.jpg') ; */
+    background:url('2.jpg');
+    background-size: 350vh;        
+    animation-name: background-animation;
+    animation-duration: 50s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-timing-function: linear;
+}
+@keyframes background-animation{
+    from{background-position: 0 0}
+    to{background-position: -900px 0}
+
+    /* 0%{background-position: 0 0}
+    25%{background-position: 0 500px}
+    50%{background-position: -500px 500px}
+    75%{background-position: -500px 0}
+    100%{background-position: 0 0}  */
+}
+a {
+    text-decoration: none !important
+}
+
+.card-border{
+border-radius: 2vw;
+/*background-color: aliceblue; */
+
+}
+
+input {
+    background-color: transparent; 
+}
+ 
+.arial {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.italic{
+    font-style: italic
+}
+.black-bg{
+    background: black;
+}
+.black-text{
+    color: black;
+}
+.display {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+}
+.font-size{
+    font-size: 16px
+}
+.align-self{
+    align-self: center;
+}
+
+@media (max-width:768px){
+       
+    .display {       
+        justify-content: start;        
+    }
+    .font-size{
+        font-size: 12px
+    }
+}
